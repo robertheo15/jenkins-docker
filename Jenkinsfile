@@ -1,14 +1,14 @@
 node {
     docker.image('python:latest').inside('-p 3000:3000') {
-        stage('Python version: ') {
+        stage('Build') {
             try {
-                sh 'python3 --version'
+                sh 'python3 setup.py sdist'
             } catch (Exception e) {
                 currentBuild.result = 'FAILURE'
                 throw e
             }
         }
-        stage('Running python script:') {
+        stage('Test') {
             try {
                 sh 'python3 main.py'
             } catch (Exception e) {
